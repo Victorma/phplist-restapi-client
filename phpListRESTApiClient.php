@@ -232,6 +232,39 @@ class phpListRESTApiClient
     }
 
     /** 
+     * Adds a new subscriber
+     *
+     * @param string  $email email of the subscriber
+     * @param integer $confirmed 
+     * @param integer $htmlemail 1=html emails, 0=no html emails.
+     * @param string  $foreignkey Foreign key.
+     * @param integer $subscribepage subscribe page to sign up to.
+     * @param string  $password The password for this Subscriber.
+     * @param integer $disabled 1=disabled, 0=enabled
+     *
+     * @return The added Subscriber. 
+     */
+    public function subscriberAdd($subscriberId)
+    {
+        $post_params = array(
+            'id' => $subscriberId,
+            'confirmed' => $confirmed,
+            'htmlemail' => $htmlemail,
+            'subscribepage' => $subscribepage,
+            'password' => $password,
+            'disabled' => $disabled
+        );
+
+        // Execute the api call
+        $result = $this->callAPI('subscriberAdd', $post_params);
+        if (!empty($result->data->id)) {
+            return $result->data;
+        } else {
+            return false;
+        }
+    }
+
+    /** 
      * Fetch subscriber by ID.
      *
      * @param int $subscriberID ID of the subscriber
